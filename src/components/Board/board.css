@@ -110,26 +110,33 @@
 }
 
 .board {
-  width: min(80vmin, 560px);
-  height: min(80vmin, 560px);
   display: grid;
   grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  width: 480px;
+  height: 480px;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.18);
 }
 
+/* Square must have fixed size */
 .square {
-  position: relative;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  display: grid;
-  place-items: center;
+  width: 64px;
+  height: 64px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.square.light { background: #eeeed2; }
-.square.dark  { background: #769656; }
+
+.square.light {
+  background-color: #f0f0d8;
+}
+
+.square.dark {
+  background-color: #769656;
+}
 
 .square.selected {
   outline: 4px solid rgba(255, 215, 0, 0.92);
@@ -141,10 +148,12 @@
 }
 
 .piece {
-  width: 82%;
-  height: 82%;
-  user-select: none;
+  width: 85%;
+  height: 85%;
+  object-fit: contain;
   pointer-events: none;
+  user-select: none;
+  image-rendering: auto; /*prevent blurriness*/
 }
 
 .dot {

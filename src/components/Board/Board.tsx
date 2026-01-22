@@ -215,7 +215,14 @@ export default function Board(){
                 className={`square ${light?"light":"dark"} ${selected?.from===sq?"selected":""} ${selected?.legalTargets.includes(sq)?"target":""}`}
                 onClick={()=>onSquareClick(sq)}
               >
-                {piece&&<img src={getPieceImg(piece.type,piece.color)} className="piece"/>}
+                {piece && (
+                  <img
+                    src={getPieceImg(piece.type, piece.color)}
+                    className="piece"
+                    alt=""
+                    draggable={false}
+                  />
+                )}
               </button>
             );
           })}
