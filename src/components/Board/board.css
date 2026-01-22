@@ -1,21 +1,22 @@
+/* ================= LAYOUT ================= */
+
 .board-wrap {
   display: flex;
   gap: 24px;
   padding: 24px;
-
   align-items: flex-start;
   justify-content: center;
-
-  overflow: visible; /* IMPORTANT */
+  overflow: visible;
 }
 
 .board-area {
   display: flex;
   flex-direction: column;
   gap: 16px;
-
-  overflow: visible; /* IMPORTANT */
+  overflow: visible;
 }
+
+/* ================= TOP BAR ================= */
 
 .top-bar {
   display: grid;
@@ -38,7 +39,7 @@
 }
 
 .clock.active {
-  outline: 3px solid rgba(30, 144, 255, 0.65);
+  outline: 3px solid rgba(30, 144, 255, 0.7);
   outline-offset: -2px;
 }
 
@@ -55,6 +56,8 @@
   font-weight: 900;
 }
 
+/* ================= CONTROLS ================= */
+
 .controls-row {
   display: flex;
   flex-wrap: wrap;
@@ -62,9 +65,10 @@
   align-items: center;
 }
 
-.mode-controls, .bot-controls, .time-controls {
+.mode-controls,
+.bot-controls,
+.time-controls {
   display: flex;
-  flex-wrap: wrap;
   gap: 8px;
   align-items: center;
 }
@@ -76,38 +80,59 @@
   margin-right: 4px;
 }
 
-.pill {
-  padding: 8px 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(0,0,0,0.12);
-  background: white;
-  cursor: pointer;
-  font-weight: 900;
-  font-size: 13px;
-}
+/* ================= BUTTON BASE ================= */
 
-.pill.selected {
-  border-color: rgba(0,0,0,0.55);
-}
-
+.pill,
 .time-btn {
-  padding: 8px 10px;
-  border-radius: 10px;
-  border: 1px solid rgba(0,0,0,0.12);
-  background: white;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid #d0d0d0;
+  background: #ffffff;
   cursor: pointer;
-  font-weight: 900;
-  font-size: 13px;
+  font-weight: 600;
+  color: #111;
+
+  transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    color 0.18s ease;
 }
 
+/* ================= HOVER (NOT SELECTED) ================= */
+
+.pill:hover:not(.selected):not(:disabled),
+.time-btn:hover:not(.selected):not(:disabled) {
+  background-color: #f3f3f3;
+  border-color: #bcbcbc;
+}
+
+/* ================= SELECTED ================= */
+
+.pill.selected,
 .time-btn.selected {
-  border-color: rgba(0,0,0,0.55);
+  background: #ffffff;
+  border-color: #1e90ff;
+  box-shadow: 0 0 0 2px rgba(30, 144, 255, 0.55);
+  color: #1e90ff;
 }
 
-.time-btn:disabled, .pill:disabled {
+/* Hover while selected → slightly stronger */
+.pill.selected:hover,
+.time-btn.selected:hover {
+  box-shadow: 0 0 0 3px rgba(30, 144, 255, 0.75);
+}
+
+/* ================= DISABLED ================= */
+
+.pill:disabled,
+.time-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+  box-shadow: none;
 }
+
+/* ================= BOT STATUS ================= */
 
 .thinking {
   font-size: 12px;
@@ -116,38 +141,32 @@
   margin-left: 6px;
 }
 
+/* ================= BOARD ================= */
+
 .board {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
-  width: min(90vw, 480px); /* responsive */
-  aspect-ratio: 1 / 1;     /* always square */
-  margin: 0 auto;
+  width: 480px;
+  aspect-ratio: 1;
 }
 
-/* Square must have fixed size */
 .square {
+  position: relative;
   width: 100%;
   height: 100%;
+  border: none;
+  padding: 0;
 
   display: flex;
   align-items: center;
   justify-content: center;
-
-  border: none;
-  padding: 0;
 }
 
-
-.square.light {
-  background-color: #f0f0d8;
-}
-
-.square.dark {
-  background-color: #769656;
-}
+.square.light { background: #f0f0d8; }
+.square.dark  { background: #769656; }
 
 .square.selected {
-  outline: 4px solid rgba(255, 215, 0, 0.92);
+  outline: 4px solid rgba(255, 215, 0, 0.9);
   outline-offset: -4px;
 }
 
@@ -155,14 +174,15 @@
   box-shadow: inset 0 0 0 4px rgba(30, 144, 255, 0.65);
 }
 
-.piece {
-  width: 85%;
-  height: 85%;
-  object-fit: contain;
+/* ================= PIECES ================= */
 
+.piece {
+  position: absolute;
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
   pointer-events: none;
   user-select: none;
-  image-rendering: auto; /*prevent blurriness*/
 }
 
 .dot {
@@ -171,6 +191,8 @@
   border-radius: 999px;
   background: rgba(30, 144, 255, 0.55);
 }
+
+/* ================= SIDE PANEL ================= */
 
 .side {
   min-width: 240px;
@@ -195,10 +217,10 @@
 .jail-piece {
   width: 24px;
   height: 24px;
-  opacity: 0.95;
 }
 
-/* small check toast */
+/* ================= CHECK TOAST ================= */
+
 .toast {
   position: absolute;
   left: 12px;
@@ -206,19 +228,19 @@
   padding: 8px 10px;
   border-radius: 10px;
   font-weight: 900;
-  letter-spacing: 0.10em;
-  background: rgba(0,0,0,0.72);
+  letter-spacing: 0.1em;
+  background: rgba(0,0,0,0.75);
   color: white;
-  user-select: none;
 }
 
-/* overlay */
+/* ================= OVERLAY ================= */
+
 .overlay {
   position: absolute;
   inset: 0;
   display: grid;
   place-items: center;
-  background: rgba(0, 0, 0, 0.38);
+  background: rgba(0,0,0,0.38);
 }
 
 .overlay-card {
@@ -238,13 +260,12 @@
 .overlay-sub {
   margin-top: 6px;
   font-size: 16px;
-  opacity: 0.9;
 }
 
 .overlay-btn {
   margin-top: 14px;
   width: 100%;
-  padding: 12px 12px;
+  padding: 12px;
   border-radius: 12px;
   border: none;
   background: #111;
@@ -257,11 +278,7 @@
   filter: brightness(1.05);
 }
 
-.overlay-hint {
-  margin-top: 10px;
-  font-size: 12px;
-  opacity: 0.65;
-}
+/* ================= ACTIONS ================= */
 
 .actions button {
   padding: 10px 12px;
@@ -270,6 +287,7 @@
   background: white;
   cursor: pointer;
 }
+
 .actions button:hover {
   background: #f6f6f6;
 }
