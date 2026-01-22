@@ -1,13 +1,20 @@
 .board-wrap {
   display: flex;
-  gap: 16px;
+  gap: 24px;
+  padding: 24px;
+
   align-items: flex-start;
-  padding: 16px;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  justify-content: center;
+
+  overflow: visible; /* IMPORTANT */
 }
 
 .board-area {
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  overflow: visible; /* IMPORTANT */
 }
 
 .top-bar {
@@ -112,21 +119,22 @@
 .board {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
-  grid-template-rows: repeat(8, 1fr);
-  width: 480px;
-  height: 480px;
-  border-radius: 12px;
-  overflow: hidden;
+  width: min(90vw, 480px); /* responsive */
+  aspect-ratio: 1 / 1;     /* always square */
+  margin: 0 auto;
 }
 
 /* Square must have fixed size */
 .square {
-  width: 64px;
-  height: 64px;
+  width: 100%;
+  height: 100%;
 
   display: flex;
   align-items: center;
   justify-content: center;
+
+  border: none;
+  padding: 0;
 }
 
 
@@ -151,6 +159,7 @@
   width: 85%;
   height: 85%;
   object-fit: contain;
+
   pointer-events: none;
   user-select: none;
   image-rendering: auto; /*prevent blurriness*/
